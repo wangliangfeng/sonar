@@ -1,26 +1,376 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   声呐 · SONAR —— 期刊气质：暖纸底色 / 朱砂红 / 声呐印章
+   夜版通过 html.dark 切换（@custom-variant dark 已启用）
+   ============================================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 日版 · 棕灰色（低蓝光护眼）：浅棕灰底 + 深暖字 */
+  --paper: #d6cfc0;
+  --paper2: #ccc4b4;
+  --panel: rgba(236, 231, 219, 0.82);
+  --panel-solid: #e7e1d2;
+  --ink: #2c2720;
+  --muted: #6e6659;
+  --line: rgba(44, 39, 32, 0.16);
+  --line-strong: rgba(44, 39, 32, 0.34);
+  --red: #a63d1e; /* 朱砂红（护眼底下的暖红点缀） */
+  --red-soft: rgba(166, 61, 30, 0.16);
+  --nred: #c03a2b;
+  --gold: #94742a;
+  /* 四频道专属色 */
+  --mod-reviews: #a63d1e; /* 乐评 · 朱砂 */
+  --mod-charts: #a8782f; /* 榜单 · 琥珀 */
+  --mod-releases: #6b7c4a; /* 新专 · 苔绿 */
+  --mod-live: #4a6a74; /* 现场 · 墨青 */
+  --mark: rgba(166, 61, 30, 0.24);
+  --mark-border: #a63d1e;
+  --shadow: 0 1px 2px rgba(44, 39, 32, 0.06), 0 6px 18px rgba(44, 39, 32, 0.07);
+  --tex1: rgba(166, 61, 30, 0.05);
+  --tex2: rgba(107, 124, 74, 0.05);
+  --tex3: rgba(148, 116, 42, 0.05);
+  --texdot: rgba(44, 39, 32, 0.04);
+}
+
+/* 夜版 · 深棕灰底 + 浅色文字（同样低蓝光护眼，仅明暗翻转） */
+.dark {
+  --paper: #4a443b;
+  --paper2: #423c34;
+  --panel: rgba(58, 52, 44, 0.92);
+  --panel-solid: #3d382f;
+  --ink: #f2ecdf; /* 浅色文字 */
+  --muted: #c9c0ac;
+  --line: rgba(242, 236, 223, 0.15);
+  --line-strong: rgba(224, 169, 79, 0.5);
+  --red: #d9a441; /* 朱砂 → 暖金 */
+  --red-soft: rgba(217, 164, 65, 0.16);
+  --nred: #e0ae5f;
+  --gold: #e0b96f;
+  --mark: rgba(217, 164, 65, 0.3);
+  --mark-border: #e3b84f;
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.55);
+  --tex1: rgba(224, 169, 79, 0.06);
+  --tex2: rgba(160, 140, 90, 0.06);
+  --tex3: rgba(184, 134, 11, 0.05);
+  --texdot: rgba(242, 236, 223, 0.02);
+}
+
+.dark body {
+  background-image: radial-gradient(ellipse 62% 42% at 74% -6%, rgba(224, 169, 79, 0.08), transparent 62%),
+    radial-gradient(ellipse 55% 38% at 12% 0%, var(--tex1), transparent 62%),
+    radial-gradient(ellipse 45% 32% at 88% 8%, var(--tex2), transparent 58%),
+    radial-gradient(ellipse 70% 46% at 50% 104%, var(--tex3), transparent 60%),
+    repeating-linear-gradient(115deg, rgba(242, 236, 223, 0.012) 0 1px, transparent 1px 3px),
+    radial-gradient(var(--texdot) 1px, transparent 1.2px);
+  background-size: auto, auto, auto, auto, auto, 5px 5px;
+}
+
+/* 护眼模式：更暖的琥珀棕底（html.dark.eye），比夜版更柔和低蓝光 */
+.dark.eye {
+  --paper: #332b20;
+  --paper2: #2c251b;
+  --panel: rgba(62, 52, 38, 0.94);
+  --panel-solid: #3f3528;
+  --ink: #f0dcb4;
+  --muted: #c9b284;
+  --line: rgba(240, 220, 180, 0.16);
+  --line-strong: rgba(216, 160, 79, 0.5);
+  --red: #d8a04f;
+  --red-soft: rgba(216, 160, 79, 0.18);
+  --nred: #e0ae5f;
+  --gold: #e0b96f;
+  --mark: rgba(216, 160, 79, 0.3);
+  --mark-border: #e0b96f;
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.55);
+  --tex1: rgba(224, 176, 95, 0.06);
+  --tex2: rgba(160, 120, 60, 0.06);
+  --tex3: rgba(184, 134, 11, 0.05);
+  --texdot: rgba(240, 220, 180, 0.02);
+}
+.dark.eye body {
+  background-image: radial-gradient(ellipse 62% 42% at 74% -6%, rgba(224, 176, 95, 0.09), transparent 62%),
+    radial-gradient(ellipse 55% 38% at 12% 0%, var(--tex1), transparent 62%),
+    radial-gradient(ellipse 45% 32% at 88% 8%, var(--tex2), transparent 58%),
+    radial-gradient(ellipse 70% 46% at 50% 104%, var(--tex3), transparent 60%),
+    radial-gradient(var(--texdot) 1px, transparent 1.2px);
+  background-size: auto, auto, auto, auto, 5px 5px;
+}
+
+/* ============================================================
+   弱视辅助：大字（整体缩放）+ 高对比（增强文字/背景对比）
+   ============================================================ */
+.a11y-large {
+  zoom: 1.15;
+}
+html.a11y-contrast body {
+  font-weight: 620;
+}
+.a11y-contrast {
+  --paper: #ffffff;
+  --paper2: #f7f3ea;
+  --panel: rgba(255, 255, 255, 0.98);
+  --panel-solid: #ffffff;
+  --ink: #16130e;
+  --muted: #3b352b;
+  --line: rgba(0, 0, 0, 0.32);
+  --line-strong: rgba(0, 0, 0, 0.6);
+  --red: #9a1f10;
+  --red-soft: rgba(154, 31, 16, 0.16);
+  --nred: #b3100b;
+  --gold: #7a5f00;
+}
+.dark.a11y-contrast {
+  --paper: #000000;
+  --paper2: #080808;
+  --panel: rgba(15, 15, 15, 1);
+  --panel-solid: #0a0a0a;
+  --ink: #ffffff;
+  --muted: #c8c8c8;
+  --line: rgba(255, 255, 255, 0.34);
+  --line-strong: rgba(255, 255, 255, 0.6);
+  --red: #ffb52e;
+  --red-soft: rgba(255, 181, 46, 0.2);
+  --nred: #ff7a3d;
+  --gold: #ffd04a;
+}
+
+/* ============================================================
+   暗色渲染引擎（Dark Reader 风格）
+   动态 = 深度解析样式（默认变量主题）；静态 = 快速基础样式
+   过滤 = CSS 滤镜反相；过滤+ = 同原理（SVG 版）
+   ============================================================ */
+.engine-static.dark body {
+  background-image: none;
+}
+
+/* 过滤 / 过滤+：以日版棕灰浅色为底，整体反相成深色 */
+.engine-filter.dark,
+.engine-filter-plus.dark {
+  --paper: #d6cfc0;
+  --paper2: #ccc4b4;
+  --panel: rgba(236, 231, 219, 0.82);
+  --panel-solid: #e7e1d2;
+  --ink: #2c2720;
+  --muted: #6e6659;
+  --line: rgba(44, 39, 32, 0.16);
+  --line-strong: rgba(44, 39, 32, 0.34);
+  --red: #a63d1e;
+  --red-soft: rgba(166, 61, 30, 0.16);
+  --nred: #c03a2b;
+  --gold: #94742a;
+  --mark: rgba(166, 61, 30, 0.24);
+  --mark-border: #a63d1e;
+  --shadow: 0 1px 2px rgba(44, 39, 32, 0.06), 0 6px 18px rgba(44, 39, 32, 0.07);
+}
+html.engine-filter,
+html.engine-filter-plus {
+  filter: invert(0.92) hue-rotate(180deg) saturate(0.85);
+}
+.engine-filter.dark body,
+.engine-filter-plus.dark body {
+  background-image: none;
+}
+.engine-filter img,
+.engine-filter video,
+.engine-filter-plus img,
+.engine-filter-plus video {
+  filter: invert(1) hue-rotate(-180deg) saturate(1.2);
+}
+.engine-filter .playerbar,
+.engine-filter .modal-mask,
+.engine-filter .toast,
+.engine-filter-plus .playerbar,
+.engine-filter-plus .modal-mask,
+.engine-filter-plus .toast {
+  filter: invert(1) hue-rotate(-180deg);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper2: var(--paper2);
+  --color-panel: var(--panel);
+  --color-panel-solid: var(--panel-solid);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-red: var(--red);
+  --color-red-soft: var(--red-soft);
+  --color-nred: var(--nred);
+  --color-gold: var(--gold);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-reviews: var(--mod-reviews);
+  --color-charts: var(--mod-charts);
+  --color-releases: var(--mod-releases);
+  --color-live: var(--mod-live);
+  --font-serif: "Noto Serif SC", "Songti SC", "SimSun", Georgia, "Times New Roman", serif;
+  --font-seal: "KaiTi", "STKaiti", "Kaiti SC", "Noto Serif SC", serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+/* 日版字体加黑约 50%（仅日版，夜版保持） */
+html:not(.dark) body {
+  font-weight: 520;
+}
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  /* 暖纸底纹：多层 radial-gradient 模拟宣纸晕染 + 细颗粒 */
+  background-image: radial-gradient(ellipse 55% 38% at 12% 0%, var(--tex1), transparent 62%),
+    radial-gradient(ellipse 45% 32% at 88% 8%, var(--tex2), transparent 58%),
+    radial-gradient(ellipse 70% 46% at 50% 104%, var(--tex3), transparent 60%),
+    radial-gradient(var(--texdot) 1px, transparent 1.2px);
+  background-size: auto, auto, auto, 5px 5px;
+  background-attachment: fixed;
+  transition: background-color 0.35s, color 0.35s;
+}
+
+::selection {
+  background: var(--red-soft);
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+mark {
+  background: var(--mark);
+  color: inherit;
+  border-bottom: 1px solid var(--mark-border);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* ---- 面板 / 卡片 ---- */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-left: 3px solid transparent;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-1px);
+  border-color: var(--line-strong);
+  box-shadow: 0 3px 14px rgba(36, 28, 18, 0.12);
+}
+.card.read .card-title {
+  opacity: 0.55;
+}
+
+/* ---- 声呐印章 ---- */
+.seal {
+  filter: drop-shadow(0 2px 4px rgba(36, 28, 18, 0.25));
+  transition: transform 0.4s;
+}
+.seal:hover {
+  transform: rotate(-6deg) scale(1.04);
+}
+
+/* ---- 焦点相似度条 ---- */
+.focus-bar {
+  height: 5px;
+  background: rgba(36, 28, 18, 0.08);
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+.dark .focus-bar {
+  background: rgba(236, 226, 200, 0.1);
+}
+.focus-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+/* ---- 模态框 ---- */
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(21, 18, 16, 0.62);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 50;
+  overflow: auto;
+  padding: 40px 18px;
+  animation: fadeIn 0.18s ease;
+}
+.modal {
+  width: min(760px, 100%);
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  animation: pop 0.22s ease;
+  position: relative;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---- Toast ---- */
+.toast {
+  position: fixed;
+  right: 18px;
+  bottom: 48px;
+  z-index: 99;
+  max-width: 320px;
+  background: var(--red);
+  color: var(--paper);
+  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  animation: pop 0.2s ease;
+}
+
+@media print {
+  .toolbar,
+  .modal-mask,
+  .star {
+    display: none !important;
+  }
 }

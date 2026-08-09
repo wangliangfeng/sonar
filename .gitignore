@@ -33,9 +33,33 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# 本地下载的免版权音乐
+music/
+
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 运行日志
+*.log
+
+# 本机运维/环境修复脚本与工具
+/admin-fix.bat
+/admin-fix.log
+/admin-fix.ps1
+/fix-pagefile.bat
+/fix-pagefile2.bat
+/fix-v2.bat
+/fix-v2-log.txt
+/tmp_*.ps1
+/tailscale-setup.exe
+/tailscale.msi
+
+# 内网穿透
+/frp/
+
+# 手机壳（独立 git 仓库，见 android-shell/.gitignore）
+/android-shell/

@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1786188253864,
+      "tag": "0000_past_true_believers",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1786200389326,
+      "tag": "0001_high_the_hood",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1786223469527,
+      "tag": "0002_awesome_wild_pack",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1786291441070,
+      "tag": "0003_whole_ultimates",
+      "breakpoints": true
+    }
+  ]
+}
