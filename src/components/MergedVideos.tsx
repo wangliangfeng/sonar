@@ -23,7 +23,19 @@ function fmtDur(s: number): string {
 }
 
 // 带超时的搜索请求：外部源(Commons 等)不可达时快速降级为空结果，避免整页被慢请求拖住
-function fetchJsonOrEmpty(url: string, ms: number): Promise<any> {
+interface VideoSourceItem {
+  bvid?: string;
+  title?: string;
+  pic?: string;
+  thumb?: string;
+  url?: string;
+  author?: string;
+  channel?: string;
+  duration?: string | number;
+  license?: string;
+}
+
+function fetchJsonOrEmpty(url: string, ms: number): Promise<{ videos: VideoSourceItem[] }> {
   const c = new AbortController();
   const t = setTimeout(() => c.abort(), ms);
   return fetch(url, { signal: c.signal })
@@ -63,39 +75,33 @@ export function MergedVideos({ title, defaultQuery = "", quick = [], commons = t
       const iqRes = iqiyi ? fetchJsonOrEmpty(`/api/iqiyi?q=${kEnc}`, 10000) : Promise.resolve({ videos: [] });
       const openRes = commons ? fetchJsonOrEmpty(`/api/video?q=${kEnc}`, 8000) : Promise.resolve({ videos: [] });
       const [bRes, iRes, oRes] = await Promise.all([biliRes, iqRes, openRes]);
-      const bili: VItem[] = (bRes.videos ?? []).map(
-        (v: { bvid: string; title: string; pic: string; author: string; duration: string }) => ({
-          type: "bili",
-          title: v.title,
-          thumb: v.pic,
-          url: v.bvid,
-          author: v.author ?? "",
-          duration: v.duration ?? "",
-          license: "B站",
-        }),
-      );
-      const iq: VItem[] = (iRes.videos ?? []).map(
-        (v: { title: string; url: string; thumb: string; channel?: string }) => ({
-          type: "iqiyi",
-          title: v.title,
-          thumb: v.thumb,
-          url: v.url,
-          author: v.channel ?? "",
-          duration: "",
-          license: "爱奇艺",
-        }),
-      );
-      const open: VItem[] = (oRes.videos ?? []).map(
-        (v: { title: string; thumb: string; url: string; duration: number; author?: string; license: string }) => ({
-          type: "commons",
-          title: v.title,
-          thumb: v.thumb,
-          url: v.url,
-          author: v.author ?? "",
-          duration: fmtDur(v.duration),
-          license: "开源",
-        }),
-      );
+      const bili: VItem[] = (bRes.videos ?? []).map((v) => ({
+        type: "bili",
+        title: v.title ?? "",
+        thumb: v.pic ?? "",
+        url: v.bvid ?? "",
+        author: v.author ?? "",
+        duration: typeof v.duration === "number" ? fmtDur(v.duration) : (v.duration ?? ""),
+        license: "B站",
+      }));
+      const iq: VItem[] = (iRes.videos ?? []).map((v) => ({
+        type: "iqiyi",
+        title: v.title ?? "",
+        thumb: v.thumb ?? "",
+        url: v.url ?? "",
+        author: v.channel ?? "",
+        duration: "",
+        license: "爱奇艺",
+      }));
+      const open: VItem[] = (oRes.videos ?? []).map((v) => ({
+        type: "commons",
+        title: v.title ?? "",
+        thumb: v.thumb ?? "",
+        url: v.url ?? "",
+        author: v.author ?? "",
+        duration: typeof v.duration === "number" ? fmtDur(v.duration) : fmtDur(Number(v.duration) || 0),
+        license: v.license ?? "",
+      }));
       setItems([...bili, ...iq, ...open]);
       setSearched(k);
     } catch {

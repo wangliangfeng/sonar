@@ -73,8 +73,22 @@ export function Guji() {
   }, []);
 
   useEffect(() => {
-    refresh();
-  }, [refresh]);
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/guji");
+        const j = await res.json();
+        if (!cancelled) setBooks(j.books ?? []);
+      } catch {
+        /* 保留原列表 */
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const loggedIn = !!session?.user;
 
