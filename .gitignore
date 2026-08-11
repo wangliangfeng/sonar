@@ -63,3 +63,10 @@ next-env.d.ts
 
 # 手机壳（独立 git 仓库，见 android-shell/.gitignore）
 /android-shell/
+
+# 本机运维脚本（公开仓库不需要）
+/dev-server.bat
+/start-dev.bat
+/start-dev-hidden.vbs
+/start-renna.bat
+/start-renna-hidden.vbs
